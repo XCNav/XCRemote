@@ -11,3 +11,6 @@ Open the menu. Goto Config - system - Look - Language/Input - Events: XCREMOTE.x
 
 Starte XCSOAR neu
 Restart XCSOAR
+
+#LK8000
+-TBD-
