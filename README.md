@@ -2,7 +2,7 @@
 XCREMOTE Konfig. Dateien für XCSOAR und LK8000
 XCREMOTE Configuration files for XCSoar and LK8000.
 
-XCSOAR
+#XCSOAR
 Lade die XCREMOTE.xci Datei in den XCSOARData Ordner auf deinem Endgerät.
 Download the XCREMOTE.xci file in your XCSOARData folder on your device.
 
