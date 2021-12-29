@@ -1,3 +1,6 @@
+##### Important!: XCVario needs to be connected as "DEVICE A" in XCSoar NMEA Setup! If it is connected to another Place you have to 
+##### change "SendNMEA Port1" to the adjacent port in this script. Device A=SendNmea Port1, Device B=SendNmesPort2 etc.
+
 
 # Define gesture to open Quickmenu without keyboard or remote
 
@@ -56,7 +59,6 @@ type=key
 data=DOWN
 event=MacCready show
 event=MacCready down
-event=MacCready down 0.5
 label=MC- (DOWN)
 location=8
 
@@ -65,7 +67,6 @@ type=key
 data=UP
 event=MacCready show
 event=MacCready up
-event=MacCready up 0.5
 label=MC+ (UP)
 location=7
 
@@ -156,4 +157,4 @@ event=Setup Alternates
 #V1.6  Added XC Vario STF Switch
 #V1.7  Added XC Vario Volume Control
 #V1.8  Removed QuickMenu Button
-#V1 9  Added XC Vario Setup Menu, splitted into Normal and XcVario Version
+#V1.9  Added XC Vario Setup Menu, splitted into Normal and XcVario Version
