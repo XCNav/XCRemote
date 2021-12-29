@@ -94,7 +94,6 @@ type=key
 data=DOWN
 event=MacCready show
 event=MacCready down
-event=MacCready down 0.5
 label=MC- (DOWN)
 location=8
 
@@ -103,7 +102,6 @@ type=key
 data=UP
 event=MacCready show
 event=MacCready up
-event=MacCready up 0.5
 label=MC+ (UP)
 location=7
 
@@ -119,7 +117,7 @@ type=key
 data=P
 event=Mode variosetup
 event=SendNMEAPort1 g,klick
-label=XCVARIO SETUP
+label=XCVARIO SETUP (LONG PUSH)
 location=5
 
 mode=Vario menu
