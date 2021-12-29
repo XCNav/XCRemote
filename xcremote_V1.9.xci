@@ -1,0 +1,159 @@
+
+# Define gesture to open Quickmenu without keyboard or remote
+
+
+mode=default
+type=gesture
+data=ULDR
+event=QuickMenu
+
+mode=default
+type=key
+data=0
+event=QuickMenu
+label=QuickMenu
+location=4
+
+
+##### Fügt Quickmenu(F1) Buttons 
+"Vario" und "Back" hinzu 
+
+mode=RemoteStick
+type=key
+data=0
+event=Mode Vario_menu
+label=Vario
+location=13
+
+mode=RemoteStick
+type=key
+data=0
+event=Exit system
+event=Mode default
+label=Quit
+location=33
+
+mode=RemoteStick
+type=key
+data=0
+event=Mode default
+label=Zurück
+location=31
+
+
+######Vario Menü
+
+mode=Vario_menu
+type=key
+data=RETURN
+event=MacCready auto show
+event=MacCready auto toggle
+label=$(CheckAutoMc)MC\n$(MacCreadyToggleActionName)
+location=6
+
+mode=Vario_menu
+type=key
+data=DOWN
+event=MacCready show
+event=MacCready down
+event=MacCready down 0.5
+label=MC- (DOWN)
+location=8
+
+mode=Vario_menu
+type=key
+data=UP
+event=MacCready show
+event=MacCready up
+event=MacCready up 0.5
+label=MC+ (UP)
+location=7
+
+mode=Vario_menu
+type=key
+data=ESCAPE
+event=Mode default
+label=BACK (ESC)
+location=9
+
+
+
+#####PAN MODE#####
+
+mode=default
+type=key
+data=p
+event=Pan on
+event=ScreenModes full
+
+mode=pan
+type=key
+data=RETURN
+event=NearestMapItems
+
+mode=pan
+type=key
+data=F4
+event=Zoom in
+
+mode=pan
+type=key
+data=F6
+event=Zoom out
+
+
+
+#####Default######
+
+mode=default
+type=key
+data=T
+event=AbortTask toggle
+
+mode=default
+type=key
+data=8
+event=AdjustWaypoint previousarm
+event=StatusMessage Previous Waypoint
+
+mode=default
+type=key
+data=7
+event=AdjustWaypoint nextarm
+event=StatusMessage Next Waypoint
+
+mode=default
+type=key
+data=Z
+event=Zoom auto show
+event=Zoom auto toggle
+
+
+mode=default
+type=key
+data=M
+event=Mode Vario_menu
+
+#mode=default
+type=key
+data=F4
+event=FlarmTraffic
+event=Mode default
+
+
+mode=default
+type=key
+data=F6
+event=Setup Alternates
+
+
+##changelog##
+#V1.2: Zoom function in PAN MODE added
+#V1.3: Added AutoZoom/Toggle
+       Added Next/Previous Waypoint Function
+#V1.4: Added STF/Vario mode     
+#V1.5  Added QuickMenu Button
+#V1.6  Added XC Vario STF Switch
+#V1.7  Added XC Vario Volume Control
+#V1.8  Removed QuickMenu Button
+#V1 9  Added XC Vario Setup Menu, splitted into Normal and XcVario Version
