@@ -1,6 +1,12 @@
+######XCSoar Inputs for XCRemote in combination with XCVario by Echard Völlm and Frits van Bremen
+###### www.xcvario.de.#####
+
+#####If you don't use a XCVario use file: xcremote_V1.x.xci 
+##### Important!: XCVario needs to be connected as "DEVICE A" in XCSoar NMEA Setup! If it is connected to another Place you have to 
+##### change "SendNMEA Port1" to the adjacent port in this script. Device A=SendNmea Port1, Device B=SendNmesPort2 etc.
+
 
 # Define gesture to open Quickmenu without keyboard or remote
-
 
 mode=default
 type=gesture
@@ -266,4 +272,4 @@ event=Setup Alternates
 #V1.6  Added XC Vario STF Switch
 #V1.7  Added XC Vario Volume Control
 #V1.8  Removed QuickMenu Button
-#V1 9  Added XC Vario Setup Menu, splitted into Normal and XcVario Version
+#V1.9  Added XC Vario Setup Menu, splitted into Normal and XcVario Version
