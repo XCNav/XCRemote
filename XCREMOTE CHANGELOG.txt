@@ -1,0 +1,14 @@
+#changelog##
+#V1.2: Zoom function in PAN MODE added
+#V1.3: Added AutoZoom/Toggle
+#      Added Next/Previous Waypoint Function
+#V1.4: Added STF/Vario mode     
+#V1.5  Added QuickMenu Button
+#V1.6  Added XC Vario STF Switch
+#V1.7  Added XC Vario Volume Control
+#V1.8  Removed QuickMenu Button
+#V1.9  Added XC Vario Setup Menu, splitted into Normal and XcVario Version
+#V1.9.1 Updated XCVario Nmea commands 
+#V2.0   Added XCRemote Actions
+#V2.0.1 Cleanup and failure management
+#V2.1 Added Exit Menu for Edition21 Buttons/ Deactivated QuickMenu Softbutton, can easily be activated by removing "#" in front of line 10
