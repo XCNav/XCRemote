@@ -208,4 +208,6 @@ event=Setup Alternates
 #V1.9.1 Updated XCVario Nmea commands 
 #V2.0   Added XCRemote Actions
 #V2.0.1 Cleanup and failure management
-#V2.1 Set QuickMenubButton Inop in line 10. To reactivate just remove "#"/ Programm Exit for XCNAV Edition Keypad When holding "X" key  
+#V2.1 Set QuickMenubButton Inop in line 10. To reactivate just remove "#"/ Programm Exit for XCNAV Edition Keypad When holding "X" key
+#V2.2 Editorial
+  
