@@ -12,3 +12,5 @@
 #V2.0   Added XCRemote Actions
 #V2.0.1 Cleanup and failure management
 #V2.1 Added Exit Menu for Edition21 Buttons/ Deactivated QuickMenu Softbutton, can easily be activated by removing "#" in front of line 10
+V2.3 Added XCRemote reset with 5 sec. X-Hold
+V2.3.1 solved reconnection issue after connection break.
