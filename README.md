@@ -1,8 +1,8 @@
 # XCRemote
 ## XCREMOTE Konfig. Dateien für XCSOAR und LK8000
 ## XCREMOTE Configuration files for XCSoar and LK8000.
-## XCSOAR:
 #
+## XCSOAR:
 ### Ab XCSOAR 7.21 ist Download der jeweiligen .xci-Datei ist nicht mehr zwingend erforderlich. Statt dessen öffne in XCSOAR die Einstellungen: CONFIG>SYSTEM>AUSSEHEN>SPRACHE,EINGABEN>EREIGNISSE>DOWNLOAD und lade die Datei GLB_XCI-remote-XCNav.xci herunter.
 ##
 ### Starting XCSOAR 7.21 The download of the respective .xci file is not longer mandatory to operate. In XCSOAR go to settings: CONFIG>SYSTEM>LOOK>LANGUAGE/INPUT>EVENTS>DOWNLOAD and download the GLB_XCI-remote-XCNav.xci file.
