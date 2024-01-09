@@ -13,8 +13,8 @@
 ### MENU>CONFIGURE 2/3>CONFIGURE LK8000>CONFIGURE DEVICE>DEVICE MODEL >> XCREMOTE DONE!
 
 
-### Zum Wiki und zur Installationsankeitung geht es hier:
-### This Is our Wiki and installation guide:
+## Zum Wiki und zur Installationsankeitung geht es hier:
+## This Is our Wiki and installation guide:
 
 ### https://github.com/XCNav/XCRemote/wiki/XCRemote-Instalation-Guide-for-XCSoar-and-LK8000
 
