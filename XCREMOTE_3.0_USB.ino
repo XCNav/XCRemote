@@ -1,8 +1,8 @@
 // Changelog:
-// XCREMOTE USB Version   
+// XCREMOTE USB Version
 // Double Klick "X" Opens running App overview
 
-// uses libraries fromddggfgftt3
+// uses libraries from
 // https://github.com/r89m/PushButton
 // https://github.com/r89m/Button
 // https://github.com/thomasfredericks/Bounce2
@@ -10,7 +10,16 @@
 #include <Button.h>
 #include <ButtonEventCallback.h>
 #include <PushButton.h>
+#include <OneButton.h>
 #include <Bounce2.h>
+
+//USB Services
+#include <USB.h>
+#include <USBHIDKeyboard.h>
+
+//BLE Services
+#include <BleKeyboard.h>
+#include <NimBLEDevice.h>
 
 //  Updating server
 #include <WiFi.h>
@@ -18,13 +27,16 @@
 #include <WebServer.h>
 #include <ESPmDNS.h>
 #include <Update.h>
-#include "OneButton.h"
-#include "USB.h"
-#include "USBHIDKeyboard.h"
-// Version
-#define VERSION "3.0_USB"
 
+// Version
+#define VERSION "3.0_USB&BLE_STF"
+
+
+//Init USBKeyboard
 USBHIDKeyboard Keyboard;
+
+// Init BLE
+BleKeyboard bleKeyboard("XCREMOTE", "XCNAV UG", 100);
 
 // Pin Assignments
 
@@ -36,13 +48,13 @@ const int Left_Pin = 37;     // Left       (Joystick Left)
 const int Right_Pin = 39;    // Right      (Joystick Right)
 const int Center_Pin = 15;   // Enter      (Joystick Press)
 const int Rectangle_Pin = 7; // Rectangle  (Button 2)
-const int Triangle_Pin = 1;  // Triangle   (Button 3)
+const int Triangle_Pin = 0;  // Triangle   (Button 3)
 const int Circle_Pin = 42;    // Circle     (Button 4)
 const int Cancel_Pin = 45;    // X          (Button 5)
-const int Stf_Pin = 41;      // STF
+const int Stf_Pin = 41;    // X          (Trigger_BTN 5)
+const int OptoPin = 33;
 
-
-// Button's keysP
+// Button's keys
 const char Up_Press_Key = KEY_UP_ARROW;
 const char Down_Press_Key = KEY_DOWN_ARROW;
 const char Left_Press_Key = KEY_LEFT_ARROW;
@@ -74,6 +86,8 @@ PushButton Rectangle = PushButton(Rectangle_Pin);
 PushButton Triangle = PushButton(Triangle_Pin);
 PushButton Circle = PushButton(Circle_Pin);
 PushButton Cancel = PushButton(Cancel_Pin);
+PushButton Stf = PushButton(Stf_Pin);
+
 
 // Setup a new OneButton on pin PIN_INPUT
 // The 2. parameter activeLOW is true, because external wiring sets the button to LOW when pressed.
@@ -81,8 +95,8 @@ OneButton button(Center_Pin, true);
 OneButton button2(Cancel_Pin, true);
 OneButton button3(Stf_Pin, true);
 
+// save the millis when a press has started.S
 
-// save the millis when a press has started.
 unsigned long HoldCenterTime;
 
 // Variables
@@ -101,11 +115,11 @@ WebServer server(80);
 // current Cruise_Climb (Joy Center) state, staring with LOW (0)
 int Cruise_Climb = LOW;
 int Cruise_ClimbOpto = LOW;
-int OptoPin=33;
 
 void keyboardPress(char key)
 {
   Keyboard.press(key);
+  bleKeyboard.press(key);
 }
 
 void cancelDoubleClick()
@@ -113,6 +127,7 @@ void cancelDoubleClick()
   keyboardPress(KEY_LEFT_ALT);
   keyboardPress(KEY_TAB);
   Keyboard.releaseAll();
+  
 }
 void Button_onRelease(Button &btn, uint16_t duration)
 {
@@ -125,7 +140,8 @@ void Button_onRelease(Button &btn, uint16_t duration)
   if (btn.is(Cancel))
     keyboardPress(Cancel_Press_Key);
   Keyboard.releaseAll();
-}
+  bleKeyboard.releaseAll();
+  }
 
 void Button_onHold(Button &btn, uint16_t duration)
 {
@@ -136,6 +152,7 @@ void Button_onHold(Button &btn, uint16_t duration)
   if (btn.is(Circle))
     keyboardPress(Circle_Hold_Key);
   Keyboard.releaseAll();
+  bleKeyboard.releaseAll();
 }
 
 void Joy_onHoldRepeat(Button &btn, uint16_t duration, uint16_t repeat_count)
@@ -151,6 +168,7 @@ void Joy_onHoldRepeat(Button &btn, uint16_t duration, uint16_t repeat_count)
     if (btn.is(Right))
       keyboardPress(Right_Press_Key);
     Keyboard.releaseAll();
+    bleKeyboard.releaseAll();
   }
   Joy_Active_Counter = Joy_Active_Counter + 1;
   if (Joy_Inactive && Joy_Active_Counter > Joy_Active_Threshold)
@@ -170,6 +188,7 @@ void Joy_onRelease(Button &btn, uint16_t duration)
 void SingleClick()
 { // this function will be called when the Joy center button is pressed 1 time only
   Keyboard.write(KEY_RETURN);
+  bleKeyboard.write(KEY_RETURN);
   Serial.println("SingleClick() detected.");
 } // SingleClick
 
@@ -178,12 +197,14 @@ void DoubleClick()
   if (Cruise_Climb == LOW)
   {
     Keyboard.print("V");
+    bleKeyboard.print("V");
     Serial.println("Vario");
-    digitalWrite(OptoPin, LOW);
+    digitalWrite(OptoPin, HIGH);
   }
   else
   {
     Keyboard.print("S");
+    bleKeyboard.print("S");
     Serial.println("Speed to fly");
     digitalWrite(OptoPin, HIGH);
   }
@@ -193,6 +214,7 @@ void DoubleClick()
 void HoldCenter()
 { // this function will be called when the Joy center button is held down for 0.5 second or more.
   Keyboard.print("P");
+  bleKeyboard.print("P");
   Serial.println("PAN()");
   HoldCenterTime = millis() - 500; // as set in setPressTicks()
 } // HoldCenter()
@@ -219,10 +241,12 @@ void Button_onHoldRepeat(Button &btn, uint16_t duration, uint16_t repeat_count)
     {
       keyboardPress(Cancel_Hold_Key);
       Keyboard.releaseAll();
+      bleKeyboard.releaseAll();
     }
     if (duration > 5000)
     {
       Keyboard.print("E");
+      bleKeyboard.print("E");
       delay(1000);
       ESP.restart(); // ESP32_Restart
     }
@@ -405,8 +429,9 @@ void updating_server_start(void)
  * ******************************************************
  */
 void setup()
-{
 
+//configure pin 2 as an input and enable the internal pull-up resistor
+{ 
   pinMode(Up_Pin, INPUT_PULLUP);
   pinMode(Down_Pin, INPUT_PULLUP);
   pinMode(Left_Pin, INPUT_PULLUP);
@@ -417,7 +442,7 @@ void setup()
   pinMode(Circle_Pin, INPUT_PULLUP);
   pinMode(Cancel_Pin, INPUT_PULLUP);
   pinMode(Stf_Pin,INPUT_PULLUP);
-  pinMode(OptoPin, OUTPUT);  //Opto Pin
+  pinMode(OptoPin, OUTPUT);
 
   Serial.begin(115200);
   Serial.println("Version: " VERSION);
@@ -427,22 +452,30 @@ void setup()
   // link the xxxclick functions to be called on xxxclick event.
   button.attachClick(SingleClick);
   button2.attachDoubleClick(cancelDoubleClick);
-  button3.attachClick(StfSingleClick);
 
   button.attachDoubleClick(DoubleClick);
   button.setPressMs(1000); // that is the time when LongHoldCenter is called
   button.attachLongPressStart(HoldCenter);
 
   // pinMode(LED_Pin, OUTPUT);
-  Keyboard.begin();
-  USB.begin();
-  delay(1000);
-  // Keyboard.write('R');
+  //Keyboard.begin();
+  //USB.begin();
+  //bleKeyboard.begin();
+  //delay(1000);
+  //Keyboard.write('R');
+  //bleKeyboard.write('R');
   if (digitalRead(Center_Pin) == 0)
     updating_server_start();
   else
   {
-    Serial.println("Starting USB work!");
+    Serial.println("Starting to work!");
+    Keyboard.begin();
+    USB.begin();
+    bleKeyboard.begin();
+    delay(1000);
+    Keyboard.write('R');
+    bleKeyboard.write('R');
+    
 
     Up.onRelease(Joy_onRelease);
     Down.onRelease(Joy_onRelease);
@@ -471,14 +504,10 @@ void setup()
 }
 
 void loop()
-
-
-  {
+{
   // keep watching the push button:
- 
   button.tick();
   button2.tick();
-  button3.tick();
   if (server_running)
   {
     server.handleClient();
@@ -504,6 +533,7 @@ void loop()
       Triangle.update();
       Circle.update();
       Cancel.update();
+      Stf.update();
     }
   }
 }
