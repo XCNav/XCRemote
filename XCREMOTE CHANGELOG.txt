@@ -1,4 +1,4 @@
-#changelog##
+#XCRemote 1 changelog##
 #V1.2: Zoom function in PAN MODE added
 #V1.3: Added AutoZoom/Toggle
 #      Added Next/Previous Waypoint Function
@@ -16,3 +16,11 @@ V2.3 Added XCRemote reset with 5 sec. X-Hold
 V2.3.1 solved reconnection issue after connection break.
 V3.0 Double click X Added for App overview
 V3.1 Adopted to Android 13+
+V4.0 New WebApp Introduced: Allows App selection XCSoar or LK8000 and XCSoar buttonfunction selection 
+
+
+
+#XCRemote II changelog##
+#V1.0 New FW for XCRemote II, supporting native USB and BLE protocoll
+#V1.1 Editorial
+#V1.2 Added ForeSight Avionics Panic Mode
